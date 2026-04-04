@@ -1,0 +1,218 @@
+[
+  {
+    "name": "1",
+    "slug": "1",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "int *twoSum(int *nums, int numsSize, int target, int *returnSize)\n{\n    int i, j;\n    int *ret = calloc(2, sizeof(int));\n    for (i = 0; i < numsSize; i++)\n    {\n        int key = target - nums[i];\n        for (j = i + 1; j < numsSize; j++)\n            if (nums[j] == key)\n            {\n                ret[0] = i;\n                ret[1] = j;\n            }\n    }\n    *returnSize = 2;\n    return ret;\n}\n"
+    },
+    "shortDescription": "1 algorithm",
+    "explanation": "Implement the 1 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "2",
+    "slug": "2",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "/*\n * Definition for singly-linked list.\n * struct ListNode {\n *     int val;\n *     struct ListNode *next;\n * };\n */\n\nstruct ListNode *addTwoNumbers(struct ListNode *l1, struct ListNode *l2)\n{\n    struct ListNode *head = NULL;\n    struct ListNode *walk = NULL;\n    struct ListNode *tmp = NULL;\n\n    int carry = 0;\n    int val1 = 0;\n    int val2 = 0;\n    int val = 0;\n\n    while (l1 != NULL || l2 != NULL || carry)\n    {\n        val1 = 0;\n        val2 = 0;\n        val = 0;\n\n        if (l1)\n        {\n            val1 = l1->val;\n            l1 = l1->next;\n        }\n\n        if (l2)\n        {\n            val2 = l2->val;\n            l2 = l2->next;\n        }\n\n        val = carry + val1 + val2;\n        carry = val / 10;\n\n        tmp = malloc(sizeof(struct ListNode));\n        tmp->val = val % 10;\n        tmp->next = NULL;\n\n        if (!head)\n        {\n            head = walk = tmp;\n        }\n        else\n        {\n            walk->next = tmp;\n            walk = walk->next;\n        }\n    }\n\n    return head;\n}\n"
+    },
+    "shortDescription": "2 algorithm",
+    "explanation": "Implement the 2 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "3",
+    "slug": "3",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "int lengthOfLongestSubstring(char *str)\n{\n    int n = strlen(str);\n\n    if (!n)\n        return 0;\n\n    int L_len = 1;  // length of longest substring\n    int C_len = 1;  // length of current substring\n\n    int P_ind, i;      //  P_ind for previous index\n    int visited[256];  //  visited will keep track of visiting char for the last\n                       //  instance. since there are 256 ASCII char, its size is\n                       //  limited to that value.\n    memset(visited, -1, sizeof(int) * 256);\n    visited[str[0]] =\n        0;  //  the index of that char will tell us that when it was visited.\n    for (i = 1; i < n; i++)\n    {\n        P_ind = visited[str[i]];\n        if (P_ind == -1 || i - C_len > P_ind)\n            C_len++;  //  if the current char was not visited earlier, or it is\n                      //  not the part of current substring\n        else\n        {  //  otherwise, we need to change the current/longest substring length\n            if (C_len > L_len)\n                L_len = C_len;\n            C_len = i - P_ind;\n        }\n        visited[str[i]] = i;\n    }\n    if (C_len > L_len)\n        L_len = C_len;\n    return L_len;\n}\n/* Brute force */\nint lengthOfLongestSubstring(char *s)\n{\n    int cur_max = 0, max = 0;\n    int counter[255];\n    int end = 0;\n\n    memset(counter, 0, sizeof(int) * 255);\n    while (end < strlen(s))\n    {\n        if (counter[s[end]] == 0)\n        {\n            counter[s[end]]++;\n            end++;\n            cur_max++;\n        }\n        else\n        {\n            char c = s[end];\n            memset(counter, 0, 255 * sizeof(int));\n            if (cur_max >= max)\n                max = cur_max;\n            cur_max = 0;\n            while (s[end - 1] != c) end--;\n        }\n    }\n    if (cur_max >= max)\n        max = cur_max;\n    return max;\n}\n"
+    },
+    "shortDescription": "3 algorithm",
+    "explanation": "Implement the 3 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "4",
+    "slug": "4",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "\n\ndouble findMedianSortedArrays(int *nums1, int nums1Size, int *nums2,\n                              int nums2Size)\n{\n    int index1 = 0;\n    int index2 = 0;\n    int v[nums1Size + nums2Size];\n    int v_index = 0;\n\n    while (index1 < nums1Size && index2 < nums2Size)\n    {\n        if (nums1[index1] <= nums2[index2])\n        {\n            v[v_index++] = nums1[index1++];\n        }\n        else\n        {\n            v[v_index++] = nums2[index2++];\n        }\n    }\n    if (index1 < nums1Size)\n    {\n        while (index1 < nums1Size)\n        {\n            v[v_index++] = nums1[index1++];\n        }\n    }\n    if (index2 < nums2Size)\n    {\n        while (index2 < nums2Size)\n        {\n            v[v_index++] = nums2[index2++];\n        }\n    }\n    if (v_index == 1)\n    {\n        return v[0];\n    }\n    if (v_index % 2 == 0)\n    {\n        double n1, n2;\n        n1 = v[v_index / 2];\n        n2 = v[(v_index / 2) - 1];\n        return (n1 + n2) / 2;\n    }\n    int new_index = (int)v_index / 2;\n    int i = 0;\n    return v[new_index];\n}\n"
+    },
+    "shortDescription": "4 algorithm",
+    "explanation": "Implement the 4 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "5",
+    "slug": "5",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "/**\n * Find longest palindrome by traversing the string and checking how\n * long palindrome can be constructed from each element by going left and right.\n * Checking palindromes of types '..aa..' and '..bab..'\n */\n\n#include <stdlib.h> /// for allocating new string via malloc()\n#include <string.h> /// for copying the contents of the string via strncpy()\n\nchar * longestPalindrome(char * s) {\n    int si_max = 0, ei_max = 0, sz_max = 0, sz, i, delta_i;\n    char ch, *s_longest;\n    if (s[1] == '\\0') return s;\n\n    for (ch = s[1], i = 1; ch != '\\0'; ch = s[++i]) {\n        if (s[i - 1] == ch) {\n            sz = 2;\n            delta_i = 1;\n            while (i - 1 - delta_i >= 0 && s[i + delta_i] != '\\0' && s[i - 1 - delta_i] == s[i + delta_i]) {\n                sz += 2;\n                delta_i += 1;\n            }\n            if (sz > sz_max) {\n                sz_max = sz;\n                si_max = i - 1 - delta_i + 1;\n                ei_max = i + delta_i - 1;\n            }\n        }\n    }\n\n    for (ch = s[0], i = 1; ch != '\\0'; ch = s[++i]) {\n        sz = 1;\n        delta_i = 1;\n        while (i - delta_i >= 0 && s[i + delta_i] != '\\0' && s[i - delta_i] == s[i + delta_i]) {\n            sz += 2;\n            delta_i += 1;\n        }\n        if (sz > sz_max) {\n            sz_max = sz;\n            si_max = i - delta_i + 1;\n            ei_max = i + delta_i - 1;\n        }\n    }\n\n    if ((s_longest = (char *) malloc(sizeof(s))) == NULL) {\n        return NULL;\n    }\n    strncpy(s_longest, s + si_max, sz_max);\n    s_longest[sz_max] = '\\0';\n\n    return s_longest;\n}\n"
+    },
+    "shortDescription": "5 algorithm",
+    "explanation": "Implement the 5 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "6",
+    "slug": "6",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "/**\n * @file\n * @brief Implementation of the [ZigZag\n * Conversion](https://leetcode.com/problems/zigzag-conversion/) Leetcode\n * problem\n * @details\n * A decent solution to the ZigZag conversion problem.\n * Take advantage of the fact that the maximum gap between the chars is 2 times\n * the depth(the number of rows).\n * The actual gap between the two first chars of a rows depends on the depth of\n * the row. The gaps between successives chars on the same row is the complement\n * of the first gap to the maximum gap.\n * @author [straight_into_the_wall](https://github.com/straight-into-the-wall)\n */\n\n#include <assert.h>  /// for assert\n#include <stdint.h>  /// for unsigned int with fixed size\n#include <stdio.h>   /// for IO operations\n#include <stdlib.h>  /// for malloc\n#include <string.h>  /// for string tools\n\n/**\n * @brief Convert a string to the it's zigzag equivalent on a given number of\n * rows.\n * @param in the string in input.\n * @param numRows the desired number of rows.\n * @returns the converted new (malloced) string.\n */\nchar* convert(char* in, uint16_t numRows)\n{\n    uint16_t len = strlen(in);\n\n    if (len < numRows)\n    {\n        numRows = len;\n    }\n    char* out = calloc(len + 1, sizeof(char));\n\n    if (numRows < 2)\n    {\n        memcpy(out, in, len + 1);\n        return out;\n    }\n\n    uint16_t max = numRows - 1;\n    uint16_t rr = 2 * max;\n    uint16_t i = 0;\n    uint16_t o = 0;\n    uint16_t delta = 0;\n\n    // first row\n    while (i < len)\n    {\n        out[o++] = in[i];\n        i += rr;\n    }\n\n    // middle rows\n    for (uint16_t l = 1; l < max; l++)\n    {\n        i = l;\n        delta = 2 * l;\n        while (i < len)\n        {\n            out[o++] = in[i];\n            delta = rr - delta;\n            i += delta;\n        }\n    }\n\n    // last row\n    i = max;\n    while (i < len)\n    {\n        out[o++] = in[i];\n        i += rr;\n    }\n\n    return out;\n}\n\n/**\n * @brief Self-test implementations\n * @returns void\n */\nstatic void testZigZag(char* s, int numRows, char* expected)\n{\n    char* ret = convert(s, numRows);\n    int len = strlen(s);\n    int cmp = strncmp(ret, expected, len);\n    assert(!cmp);\n\n    free(ret);\n}\n\n/**\n * @brief Self-test implementations\n * @returns void\n */\nstatic void test()\n{\n    char* s01 = \"PAYPALISHIRING\";\n\n    char* r01 = \"PINALSIGYAHRPI\";\n    testZigZag(s01, 4, r01);\n\n    char* r02 = \"PAHNAPLSIIGYIR\";\n    testZigZag(s01, 3, r02);\n\n    char* s03 = \"A\";\n    testZigZag(s03, 1, s03);\n    testZigZag(s03, 3, s03);\n\n    char* s04 =\n        \"cbxdwjccgtdoqiscyspqzvuqivzptlpvooynyapgvswoaosaghrffnxnjyeeltzaiznicc\"\n        \"ozwknwyhzgpqlwfkjqipuu\"\n        \"jvwtxlbznryjdohbvghmyuiggtyqjtmuqinntqmihntkddnalwnmsxsatqqeldacnnpjfe\"\n        \"rmrnyuqnwbjjpdjhdeavkn\"\n        \"ykpoxhxclqqedqavdwzoiorrwwxyrhlsrdgqkduvtmzzczufvtvfioygkvedervvudnegh\"\n        \"bctcbxdxezrzgbpfhzanff\"\n        \"eccbgqfmzjqtlrsppxqiywjobspefujlxnmddurddiyobqfspvcoulcvdrzkmkwlyiqdch\"\n        \"ghrgytzdnobqcvdeqjystm\"\n        \"epxcaniewqmoxkjwpymqorluxedvywhcoghotpusfgiestckrpaigocfufbubiyrrffmwa\"\n        \"eeimidfnnzcphkflpbqsvt\"\n        \"dwludsgaungfzoihbxifoprwcjzsdxngtacw\";\n\n    char* r04 =\n        \"cbxdwjccgtdoqiscyspqzvuqivzptlpvooynyapgvswoaosaghrffnxnjyeeltzaiznicc\"\n        \"ozwknwyhzgpqlwfkjqipuu\"\n        \"jvwtxlbznryjdohbvghmyuiggtyqjtmuqinntqmihntkddnalwnmsxsatqqeldacnnpjfe\"\n        \"rmrnyuqnwbjjpdjhdeavkn\"\n        \"ykpoxhxclqqedqavdwzoiorrwwxyrhlsrdgqkduvtmzzczufvtvfioygkvedervvudnegh\"\n        \"bctcbxdxezrzgbpfhzanff\"\n        \"eccbgqfmzjqtlrsppxqiywjobspefujlxnmddurddiyobqfspvcoulcvdrzkmkwlyiqdch\"\n        \"ghrgytzdnobqcvdeqjystm\"\n        \"epxcaniewqmoxkjwpymqorluxedvywhcoghotpusfgiestckrpaigocfufbubiyrrffmwa\"\n        \"eeimidfnnzwccpahtkgfnl\"\n        \"xpdbsqzsjvctwdrwploufdisxgbahuinogzf\";\n\n    testZigZag(s04, 472, r04);\n}\n\n/**\n * @brief Main function\n * @returns 0 on exit\n */\nint main(void)\n{\n    test();  // run self-test implementations\n    return 0;\n}\n"
+    },
+    "shortDescription": "6 algorithm",
+    "explanation": "Implement the 6 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "7",
+    "slug": "7",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "#include <limits.h>\n\nint reverse(int x)\n{\n    int rev = 0;\n    while (x != 0)\n    {\n        int pop = x % 10;\n        x /= 10;\n        if (rev > INT_MAX / 10 || (rev == INT_MAX / 10 && pop > 7))\n            return 0;\n        if (rev < INT_MIN / 10 || (rev == INT_MIN / 10 && pop < -8))\n            return 0;\n        rev = rev * 10 + pop;\n    }\n    return rev;\n}\n"
+    },
+    "shortDescription": "7 algorithm",
+    "explanation": "Implement the 7 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  },
+  {
+    "name": "8",
+    "slug": "8",
+    "category": "Miscellaneous",
+    "implementations": {
+      "C": "int myAtoi(char *str)\n{\n    int minusFlag = 0;\n    int length = strlen(str);\n    long int result = 0;\n    char numberBuffer[11];\n    int counter = 0;\n    while (str[counter] == ' ')\n    {\n        counter++;\n    }\n    str = &str[counter];\n    counter = 0;\n\n    for (int i = 0; i < length; i++)\n    {\n        if (i == 0)\n        {\n            if (str[0] == '-')\n            {\n                minusFlag = 1;\n                i++;\n            }\n            else if (str[0] == '+')\n            {\n                i++;\n            }\n        }\n        if (counter > 10)\n        {\n            if (minusFlag)\n            {\n                return __INT_MAX__ * -1 - 1;\n            }\n            else\n            {\n                return __INT_MAX__;\n            }\n        }\n\n        if (str[i] < '0' || str[i] > '9')\n        {\n            break;\n        }\n        if (counter == 0 && str[i] == '0')\n        {\n            continue;\n        }\n\n        numberBuffer[counter] = str[i];\n        counter++;\n    }\n\n    int i = 0;\n    while (counter > 0)\n    {\n        if (minusFlag)\n        {\n            result -= (numberBuffer[i] - '0') * pow(10.0, counter - 1);\n        }\n        else\n        {\n            result += (numberBuffer[i] - '0') * pow(10.0, counter - 1);\n        }\n        i++;\n        counter--;\n    }\n\n    if (result > __INT_MAX__)\n    {\n        return __INT_MAX__;\n    }\n    else if (result < __INT_MAX__ * -1 - 1)\n    {\n        return __INT_MAX__ * -1 - 1;\n    }\n    return result;\n}\n"
+    },
+    "shortDescription": "8 algorithm",
+    "explanation": "Implement the 8 algorithm in Miscellaneous category.",
+    "howItWorks": [],
+    "timeComplexity": {
+      "best": "O(n)",
+      "average": "O(n)",
+      "worst": "O(n)"
+    },
+    "spaceComplexity": "O(1)",
+    "difficulty": "Beginner",
+    "animationSteps": [],
+    "useCases": [],
+    "pros": [],
+    "cons": [],
+    "tags": [
+      "miscellaneous"
+    ],
+    "relatedAlgorithms": [],
+    "realWorldExamples": []
+  }
+]
