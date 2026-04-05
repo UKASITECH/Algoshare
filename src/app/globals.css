@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #0a0a0a;
+    --card-foreground: #ffffff;
+    --popover: #0a0a0a;
+    --popover-foreground: #ffffff;
+    --primary: #ffffff;
+    --primary-foreground: #000000;
+    --secondary: #1a1a1a;
+    --secondary-foreground: #ffffff;
+    --muted: #1a1a1a;
+    --muted-foreground: #a0a0a0;
+    --accent: #262626;
+    --accent-foreground: #ffffff;
+    --destructive: #ffffff;
+    --border: #262626;
+    --input: #262626;
+    --ring: #525252;
+    --radius: 0px;
+    --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+    --font-pixel: 'VT323', monospace;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-mono;
+    font-family: var(--font-mono);
+  }
+
+  html {
+    font-family: var(--font-mono);
+  }
+}
+
+/* Scanline effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100vh);
+  }
+}
+
+/* CRT flicker */
+@keyframes flicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.98; }
+}
+
+/* Blink cursor */
+@keyframes blink {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Typing cursor */
+@keyframes typing-cursor {
+  0%, 100% { border-right-color: #ffffff; }
+  50% { border-right-color: transparent; }
+}
+
+/* Glow pulse */
+@keyframes glow-pulse {
+  0%, 100% { 
+    text-shadow: 0 0 5px rgba(255,255,255,0.5), 0 0 10px rgba(255,255,255,0.3);
+  }
+  50% { 
+    text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5);
+  }
+}
+
+/* Matrix rain background */
+@keyframes matrix-rain {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* Terminal prompt blink */
+@keyframes prompt-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.scanline::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  animation: scanline 8s linear infinite;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* CRT screen effect */
+.crt-effect {
+  animation: flicker 0.15s infinite;
+}
+
+/* Blinking cursor */
+.cursor-blink::after {
+  content: "█";
+  animation: blink 1s step-end infinite;
+}
+
+/* Typing cursor effect */
+.typing-cursor {
+  border-right: 2px solid #ffffff;
+  animation: typing-cursor 0.75s step-end infinite;
+}
+
+/* Glow text effect */
+.glow-text {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Terminal prompt animation */
+.terminal-prompt::before {
+  content: "$ ";
+  color: #a0a0a0;
+  animation: prompt-blink 1s step-end infinite;
+}
+
+/* Hover glow effect */
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  text-shadow: 0 0 10px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.3);
+  box-shadow: 0 0 15px rgba(255,255,255,0.2);
+}
+
+/* Card hover terminal effect */
+.terminal-card {
+  transition: all 0.2s ease;
+}
+
+.terminal-card:hover {
+  background: #111111;
+  border-color: #404040;
+  transform: translateY(-2px);
+}
+
+.terminal-card:hover::before {
+  content: "> ";
+  color: #a0a0a0;
+}
+
+/* Grid pattern background */
+.grid-pattern {
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Dot matrix effect */
+.dot-matrix {
+  background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+/* Custom scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #262626 #000000;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #000000;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #262626;
+  border: 1px solid #000000;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+/* Selection color */
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+/* Focus outline */
+*:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* Terminal input styles */
+.terminal-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  outline: none;
+}
+
+.terminal-input::placeholder {
+  color: #525252;
+}
+
+/* Code block styling */
+pre, code {
+  font-family: var(--font-mono);
+}
+
+/* Pixel font utility */
+.font-pixel {
+  font-family: var(--font-pixel);
+}
+
+/* Blinking underscore */
+.blinking-underscore::after {
+  content: "_";
+  animation: blink 1s step-end infinite;
+}
